@@ -6,7 +6,8 @@
 [![License](https://img.shields.io/github/license/bigclownlabs/bcf-skeleton.svg)](https://github.com/bigclownlabs/bcf-skeleton/blob/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/BigClownLabs.svg?style=social&label=Follow)](https://twitter.com/BigClownLabs)
 
-This repository contains firmware vibration monitor for [Core Module](https://shop.bigclown.com/core-module).
+This repository contains firmware Vibration monitor for [Core Module](https://shop.bigclown.com/core-module).
+This firmware sends the magnitude measured on the accelerometer. Normal value is around 1. If there is some unstability the value goes higher or lower.
 
 ## License
 
