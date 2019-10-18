@@ -51,7 +51,7 @@ void application_init(void)
     bc_led_pulse(&led, 1000);
 
     bc_radio_init(BC_RADIO_MODE_NODE_SLEEPING);
-    bc_radio_pairing_request("printer-vibration-monitor", VERSION);
+    bc_radio_pairing_request("vibration-monitor", VERSION);
 
     
     bc_lis2dh12_init(&acc, BC_I2C_I2C0, 0x19);
