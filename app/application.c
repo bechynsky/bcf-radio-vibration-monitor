@@ -1,9 +1,6 @@
 #include <application.h>
 
-#define TEMPERATURE_TAG_PUB_NO_CHANGE_INTEVAL (15 * 60 * 1000)
-#define TEMPERATURE_TAG_PUB_VALUE_CHANGE 0.2f
-
-#define UPDATE_NORMAL_INTERVAL             (5 * 1000)
+#define UPDATE_NORMAL_INTERVAL             (1 * 1000)
 
 // LED instance
 bc_led_t led;
@@ -13,9 +10,6 @@ bc_lis2dh12_t acc;
 bc_lis2dh12_result_g_t result;
 
 float magnitude;
-float last_magnitude;
-
-bc_tick_t next_pub;
 
 void lis2_event_handler(bc_lis2dh12_t *self, bc_lis2dh12_event_t event, void *event_param)
 {
@@ -27,19 +21,12 @@ void lis2_event_handler(bc_lis2dh12_t *self, bc_lis2dh12_event_t event, void *ev
         magnitude = pow(result.x_axis, 2) + pow(result.y_axis, 2) + pow(result.z_axis, 2);
         magnitude = sqrt(magnitude);
         
-        if ((fabs(magnitude - last_magnitude) >= TEMPERATURE_TAG_PUB_VALUE_CHANGE) || (next_pub < bc_scheduler_get_spin_tick()))
-        {
-            // Make longer pulse when transmitting
-            bc_led_pulse(&led, 100);
-
-            bc_radio_pub_float("magnitude", &magnitude);
-            last_magnitude = magnitude;
-            next_pub = bc_scheduler_get_spin_tick() + TEMPERATURE_TAG_PUB_NO_CHANGE_INTEVAL;
-        }
-
-    
+       
+        bc_led_pulse(&led, 100);
+        bc_radio_pub_float("magnitude", &magnitude);
     }
 }
+
 void application_init(void)
 {
     // Initialize logging
