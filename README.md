@@ -5,7 +5,7 @@ This firmware sends the magnitude measured on the accelerometer. Normal value is
 
 ## Node-red Dasboard
 
-[Dashboard](node-red-dashboard.json).
+For data visialization we use Node-red [Dashboard](node-red-dashboard.json) and [IFTTT](https://ifttt.com/) platform to send notification to mobile phone. You will need IFTTT mobile application for your device.
 
 ![alt text](node-red-flow.png)
 
