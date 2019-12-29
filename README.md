@@ -7,6 +7,10 @@ This firmware sends the magnitude measured on the accelerometer. Normal value is
 
 [Dashboard](node-red-dashboard.json).
 
+![alt text](node-red-flow.png)
+
+![alt text](node-red-dashboard.png)
+
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT/) - see the [LICENSE](LICENSE) file for details.
