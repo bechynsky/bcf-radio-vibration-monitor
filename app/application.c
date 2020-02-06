@@ -1,6 +1,6 @@
 #include <application.h>
 
-#define UPDATE_NORMAL_INTERVAL             (1 * 1000)
+#define UPDATE_NORMAL_INTERVAL             (1 * 100)
 
 // LED instance
 bc_led_t led;
@@ -10,6 +10,13 @@ bc_lis2dh12_t acc;
 bc_lis2dh12_result_g_t result;
 
 float magnitude;
+float biggest_magnitude = 0;
+float delta;
+float last_delta = 0;
+
+#define SEND_AFTER  10
+int counter;
+
 
 void lis2_event_handler(bc_lis2dh12_t *self, bc_lis2dh12_event_t event, void *event_param)
 {
@@ -21,9 +28,26 @@ void lis2_event_handler(bc_lis2dh12_t *self, bc_lis2dh12_event_t event, void *ev
         magnitude = pow(result.x_axis, 2) + pow(result.y_axis, 2) + pow(result.z_axis, 2);
         magnitude = sqrt(magnitude);
         
+        delta = 1 - magnitude;
+
+        if (delta < 0)
+        {
+            delta = delta * -1;
+        }
+
+        if (delta > last_delta)
+        {
+            biggest_magnitude = magnitude;
+        }
        
-        bc_led_pulse(&led, 100);
-        bc_radio_pub_float("magnitude", &magnitude);
+        if (counter++ > SEND_AFTER)
+        {
+            counter = 0;
+            last_delta = 0;
+
+            bc_led_pulse(&led, 100);
+            bc_radio_pub_float("magnitude", &biggest_magnitude);
+        }
     }
 }
 
